@@ -32,7 +32,6 @@ def add_comments(conn, comment):
     insert = '''INSERT INTO comment (videoId, comment)
                 VALUES (?,?) '''
     try:
-
         conn.execute(insert, comment)
         conn.commit()
     except:
@@ -49,7 +48,7 @@ def main():
     DEVELOPER_KEY = Secrets['apiKey']
     videoId = ""
 
-    conn = create_connection("./data_repository/dataset.db")
+    conn = create_connection("../data_repository/dataset.db")
 
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey = DEVELOPER_KEY)
