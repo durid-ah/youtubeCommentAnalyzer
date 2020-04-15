@@ -3,23 +3,10 @@
 # https://developers.google.com/explorer-help/guides/code_samples#python
 
 import os
-import sqlite3
 import googleapiclient.discovery
 
-from sqlite3 import Error
+from data_repository.sqlite_functions import create_connection
 from secretsImport import Secrets
-
-
-def create_connection(db_file):
-    """connect to the database"""
-    conn = None
-    try:
-        conn = sqlite3.connect(db_file)
-        return conn
-    except Error as e:
-        print(e)
-
-    return conn
 
 
 def add_comments(conn, comment):
