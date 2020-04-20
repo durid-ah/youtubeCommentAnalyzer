@@ -30,3 +30,9 @@ def create_table(conn, create_table_sql):
         c.execute(create_table_sql)
     except Error as e:
         print(e)
+
+
+if __name__ == "__main__":
+    conn = create_connection("./dataset.db")
+    cur = conn.cursor()
+    cur.lastrowid()
