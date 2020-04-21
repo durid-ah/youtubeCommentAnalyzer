@@ -1,7 +1,8 @@
+# grab the tweets from the local database strip out the unnecessary characters
+# and create a file with that data to be used in the fasttext training model
 from data_repository.sqlite_functions import create_connection
 import re
 import emoji
-import pandas as pd
 
 contractions = {
         "ain't":"is not",
@@ -141,7 +142,14 @@ def strip_accents(text):
     return str(text)
 
 
+# TODO: Implement a more efficient way to perform this
 def strip_down_comment(comment):
+    """
+    the function strips down all unnecessary characters and words such as hash-tags,
+    punctuation, accents and unnecessary spaces
+    :param comment:
+    :return:
+    """
     comment = emoji.demojize(comment)
     comment = re.sub("(@[A-Za-z0-9]+)", "", comment)  # people tags
     comment = re.sub(r'#([^\s]+)', r'\1', comment)
@@ -161,9 +169,9 @@ def strip_down_comment(comment):
 
 def main():
     tweet_query = "SELECT * FROM labeled_tweet"
-    write_file = open('tweets.txt', 'w', encoding='utf-8')
+    write_file = open('../tweets.txt', 'w', encoding='utf-8')
 
-    conn = create_connection("data_repository/dataset.db")
+    conn = create_connection("../data_repository/dataset.db")
     cur = conn.cursor()
     cur.execute(tweet_query)
     rows = cur.fetchall()
