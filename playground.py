@@ -24,12 +24,19 @@ import pandas as pd
 # print(data['apiKey'])
 # json_file.close()
 
-headers = ['target', 'id', 'date', 'flag', 'user', 'text']
+# headers = ['target', 'id', 'date', 'flag', 'user', 'text']
+#
+# df = pd.read_csv(
+#     '../Downloads/sentiment140/training.1600000.processed.noemoticon.csv',
+#     encoding='latin1',
+#     names=headers
+# )
+#
+# print(df)
 
-df = pd.read_csv(
-    '../Downloads/sentiment140/training.1600000.processed.noemoticon.csv',
-    encoding='latin1',
-    names=headers
-)
-
-print(df)
+i = 5
+j = 1
+while i <= 50:
+    print(i, j)
+    i += 1
+    j += 1
