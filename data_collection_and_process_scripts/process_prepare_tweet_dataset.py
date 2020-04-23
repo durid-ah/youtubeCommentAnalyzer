@@ -2,7 +2,7 @@
 # and create a file with that data to be used in the fasttext training model
 
 from data_repository.sqlite_functions import create_connection
-from preprocessing_tools import strip_down_comment
+from data_collection_and_process_scripts.preprocessing_tools import strip_down_comment
 
 def main():
     tweet_query = "SELECT * FROM labeled_tweet"
