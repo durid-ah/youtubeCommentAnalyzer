@@ -6,8 +6,29 @@ import os
 import googleapiclient.discovery
 import googleapiclient.errors
 from secretsImport import Secrets
+from data_repository.sqlite_functions import create_connection
 
 scopes = ["https://www.googleapis.com/auth/youtube.readonly"]
+
+
+def add_video(
+        conn, video_id, channel_id,
+        title, description, thumbnail_url,
+        views, likes, dislikes
+):
+    insert = """
+        INSERT INTO video (video_id, channel_id, title, description, thumbnail_url, views, likes, dislikes)
+        VALUES (?,?,?,?,?,?,?,?)
+    """
+
+    try:
+        conn.execute(
+            insert, video_id, channel_id,
+            title, description, thumbnail_url,
+            views, likes, dislikes
+        )
+    except:
+        print("An error ocurred")
 
 
 def main():
@@ -27,11 +48,25 @@ def main():
         api_service_name, api_version, developerKey=credentials)
 
     request = youtube.videos().list(
-        part="statistics, snippet",
-        id="7OGAqaf0kZg"
+        part="statistics,snippet",
+        id="OPDRQnKBcpA"
     )
 
     response = request.execute()
+    video = response["items"][0]
+    conn = create_connection("../data_repository/dataset.db")
+
+    add_video(
+        conn=conn,
+        video_id=video['id'],
+        channel_id=video['snippet']['channelId'],
+        title=video['snippet']['title'],
+        description=video['snippet']['description'],
+        thumbnail_url=video['snippet']['thumbnails']['default'],
+        views=video['statistics']['viewCount'],
+        likes=video['statistics']['likeCount'],
+        dislikes=video['statistics']['dislikeCount']
+    )
 
     print(response)
 
