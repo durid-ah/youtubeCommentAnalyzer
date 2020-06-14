@@ -4,6 +4,7 @@
 from data_repository.sqlite_functions import create_connection
 from data_collection_and_process_scripts.preprocessing_tools import strip_down_comment
 
+
 def main():
     tweet_query = "SELECT * FROM labeled_tweet"
     write_file = open('../tweets.txt', 'w', encoding='utf-8')
