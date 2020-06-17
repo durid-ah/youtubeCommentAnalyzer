@@ -23,9 +23,9 @@ def add_video(
 
     try:
         conn.execute(
-            insert, video_id, channel_id,
+            insert, (video_id, channel_id,
             title, description, thumbnail_url,
-            views, likes, dislikes
+            views, likes, dislikes)
         )
     except:
         print("An error ocurred")
@@ -41,34 +41,34 @@ def main():
     # client_secrets_file = "YOUR_CLIENT_SECRET_FILE.json"
 
     # Get credentials and create an API client
-    # flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
-    #    client_secrets_file, scopes)
     credentials = Secrets['apiKey']
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=credentials)
 
     request = youtube.videos().list(
         part="statistics,snippet",
-        id="OPDRQnKBcpA"
+        id="g4Hbz2jLxvQ"
     )
 
     response = request.execute()
-    video = response["items"][0]
+    videos = response["items"]
     conn = create_connection("../data_repository/dataset.db")
 
-    add_video(
-        conn=conn,
-        video_id=video['id'],
-        channel_id=video['snippet']['channelId'],
-        title=video['snippet']['title'],
-        description=video['snippet']['description'],
-        thumbnail_url=video['snippet']['thumbnails']['default'],
-        views=video['statistics']['viewCount'],
-        likes=video['statistics']['likeCount'],
-        dislikes=video['statistics']['dislikeCount']
-    )
+    for video in videos:
+        add_video(
+            conn=conn,
+            video_id=video['id'],
+            channel_id=video['snippet']['channelId'],
+            title=video['snippet']['title'],
+            description=video['snippet']['description'],
+            thumbnail_url=video['snippet']['thumbnails']['default']['url'],
+            views=video['statistics']['viewCount'],
+            likes=video['statistics']['likeCount'],
+            dislikes=video['statistics']['dislikeCount']
+        )
 
     print(response)
+    conn.commit()
 
 
 if __name__ == "__main__":

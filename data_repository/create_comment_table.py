@@ -8,9 +8,11 @@ def execute():
     db_name = "./dataset.db"
 
     create_comments_table = """ CREATE TABLE IF NOT EXISTS comment (
-                                    id integer PRIMARY KEY,
-                                    videoId text NOT NULL,
-                                    comment text);"""
+                                    comment_id text PRIMARY KEY,
+                                    video_id text NOT NULL,
+                                    comment text,
+                                    like_count integer
+                                    );"""
 
     conn = create_connection(db_name)
     if conn is not None:
