@@ -24,7 +24,7 @@ def add_channel(conn, channel_id, title, thumbnail_url, subscribers, videos):
         conn.execute(insert, (channel_id, title, thumbnail_url, subscribers, videos))
         conn.commit()
     except:
-        print("An error occured")
+        print("An error occurred")
 
 
 def main():
