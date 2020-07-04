@@ -5,7 +5,7 @@ from secretsImport import Secrets
 
 def get_videos():
     db_name = '../data_repository/dataset.db'
-    channels = 'SELECT comment_id, label, probability FROM prediction WHERE prediction_id <= 2478'
+    channels = 'SELECT comment_id, label, probability FROM prediction'
     conn = create_connection(db_name)
     cursor = conn.cursor()
     cursor.execute(channels)
