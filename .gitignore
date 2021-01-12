@@ -1,1 +1,9 @@
 .idea
+.vscode
+__pycache__
+venv
+
+review.json
+sentiment_model_q.ftz
+
+*.db
