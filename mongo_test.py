@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 from pprint import pprint
 from secretsImport import Secrets
+from random import randint
+
 
 user_name = Secrets["mongo_user"]
 password = Secrets["mongo_pass"]
@@ -10,4 +12,7 @@ url = f'mongodb+srv://{user_name}:{password}@cluster0.1uunq.mongodb.net/{dbname}
 print(url)
 
 client = MongoClient(url)
-print()
+db = client.sentiment_analyzer
+result = db.trends.insert_one({'test': 1})
+
+print(result)
