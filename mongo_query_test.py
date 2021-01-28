@@ -1,6 +1,6 @@
 from secretsImport import Secrets
 from pymongo import MongoClient
-from datetime import datetime
+import datetime
 
 # import datetime as DT
 # today = DT.date.today()
@@ -18,4 +18,11 @@ url = f'mongodb+srv://{user_name}:{password}@cluster0.1uunq.mongodb.net/{dbname}
 client = MongoClient(url)
 
 db = client['sentiment']
-db.trends.insert_many([{}])
+today = datetime.datetime.utcnow()
+one_day = today - datetime.timedelta(days=1)
+two_days = today - datetime.timedelta(days=2)
+three_days = today - datetime.timedelta(days=3)
+four_days = today - datetime.timedelta(days=4)
+db.trends.insert_many([
+   *[{'Test': i, 'Time': three_days} for i in range(5)]
+   ])
