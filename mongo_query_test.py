@@ -16,3 +16,6 @@ dbname = "durid-tutorial-db"
 
 url = f'mongodb+srv://{user_name}:{password}@cluster0.1uunq.mongodb.net/{dbname}?retryWrites=true&w=majority'
 client = MongoClient(url)
+
+db = client['sentiment']
+db.trends.insert_many([{}])
