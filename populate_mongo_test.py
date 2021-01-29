@@ -17,12 +17,26 @@ dbname = "durid-tutorial-db"
 url = f'mongodb+srv://{user_name}:{password}@cluster0.1uunq.mongodb.net/{dbname}?retryWrites=true&w=majority'
 client = MongoClient(url)
 
-db = client['sentiment']
+db = client['sentiment_analyzer']
+
+db.trends_test.drop()
+
 today = datetime.datetime.utcnow()
 one_day = today - datetime.timedelta(days=1)
 two_days = today - datetime.timedelta(days=2)
 three_days = today - datetime.timedelta(days=3)
 four_days = today - datetime.timedelta(days=4)
-db.trends.insert_many([
-   *[{'Test': i, 'Time': three_days} for i in range(5)]
-   ])
+
+test_data = [
+   *[{'Test': i, 'Time': one_day} for i in range(2)],
+   *[{'Test': i, 'Time': two_days} for i in range(8)],
+   *[{'Test': i, 'Time': three_days} for i in range(5)],
+   *[{'Test': i, 'Time': four_days} for i in range(1)]
+]
+
+print("Data to be inserted:")
+
+for i in test_data:
+   print(i)
+
+db.trends_test.insert_many(test_data)
