@@ -6,5 +6,5 @@ three_days = today - datetime.timedelta(days=3)
 db = client['sentiment_analyzer']
 vals = db.trends_test.find({'Time': {'$gte': three_days}})
 
-for i in vals:
-   print(i)
+s = list(map(lambda trend: trend['Time'] , vals))
+print(s)
